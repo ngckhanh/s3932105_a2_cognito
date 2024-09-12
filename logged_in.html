@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Callback</title>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const authCode = params.get('code');
+
+      if (authCode) {
+        console.log("Authorization Code:", authCode);
+        await fetchTokens(authCode);
+      }
+    });
+
+    async function fetchTokens(authCode) {
+      const client_id = "7bckgr923mbj59cedeqp0smbug";
+      const client_secret = "1njtqg2d4oftua2upj4hn0gvk3ur2d9jg9ie2ro08ee3i701np66";
+      const redirect_uri = "http://localhost:8000/logged_in.html"; // Update with your actual redirect URI
+
+      const tokenUrl = "https://s3932105.auth.us-east-1.amazoncognito.com/oauth2/token"; // Update with your actual token URL
+
+      const response = await fetch(tokenUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          grant_type: 'authorization_code',
+          client_id: client_id,
+          client_secret: client_secret,
+          code: authCode,
+          redirect_uri: redirect_uri,
+        }),
+      });
+
+      if (response.ok) {
+        const tokenData = await response.json();
+        console.log("Access Token:", tokenData.access_token);
+        console.log("ID Token:", tokenData.id_token);
+        console.log("Refresh Token:", tokenData.refresh_token);
+
+        const decoded = decodeJWT(tokenData.id_token);
+        console.log("Decoded ID Token:", decoded);
+        const userRole = decoded['cognito:groups'] ? decoded['cognito:groups'][0] : 'guest';
+        console.log("User Role:", userRole);
+
+        // Store user role in localStorage or sessionStorage
+        sessionStorage.setItem('userRole', userRole);
+
+        // Redirect based on user role
+        if (userRole === 'Admin') {
+          window.location.href = '/admin';
+        } else if (userRole === 'User') {
+          window.location.href = '/user';
+        } else {
+          window.location.href = '/';
+        }
+      } else {
+        console.error('Failed to exchange code for tokens:', await response.text());
+      }
+    }
+
+    function decodeJWT(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return {};
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen"></body>
+  <div class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+      <div class="spinner mx-auto mb-4"></div>
+      <h1 class="text-xl font-semibold text-gray-700">Redirecting...</h1>
+    </div>
+  </div>
+</body>
+</html>
