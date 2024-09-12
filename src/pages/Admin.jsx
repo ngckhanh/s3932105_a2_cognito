@@ -6,6 +6,7 @@ function Admin() {
   const [authenticated, setAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [cats, setCats] = useState([]);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const role = sessionStorage.getItem('userRole');
@@ -36,6 +37,8 @@ function Admin() {
 
     // Update the state to remove the deleted cat from the UI
     setCats(cats.filter(cat => cat.id !== id));
+
+    setSuccessMessage(`Successfully deleted cat with ID: ${id}`);
   };
 
   return (
@@ -57,6 +60,10 @@ function Admin() {
               </button>
             </div>
           </div>
+
+          {successMessage && (
+            <p className="text-green-500 mb-4">{successMessage}</p> // Display success message
+          )}
 
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">List of Cats:</h2>
           <div className="overflow-x-auto">
