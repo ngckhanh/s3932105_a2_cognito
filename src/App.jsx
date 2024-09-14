@@ -1,44 +1,51 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, NavLink } from 'react-router-dom';
 
 function App() {
   return (
     <div className='min-h-screen bg-[#C5DCFF] bg-opacity-50 flex flex-col'>
       {/* Navigation Bar */}
       <nav className='flex justify-around bg-pink-300 text-white p-4'>
-        <Link
+        <NavLink
           to="/"
-          className='px-4 py-2 rounded hover:bg-pink-950 transition-colors duration-200'
+          className={({ isActive }) =>
+            `px-4 py-2 rounded transition-colors duration-200 ${isActive ? 'bg-white text-pink-950' : 'hover:bg-pink-950'}`
+          }
         >
           Home
-        </Link>
+        </NavLink>
 
-        <Link
+        <NavLink
           to="/cats"
-          className='px-4 py-2 rounded hover:bg-pink-950 transition-colors duration-200'
+          className={({ isActive }) =>
+            `px-4 py-2 rounded transition-colors duration-200 ${isActive ? 'bg-white text-pink-950' : 'hover:bg-pink-950'}`
+          }
         >
           Cats
-        </Link>
+        </NavLink>
 
-        <Link
+        <NavLink
           to="/user"
-          className='px-4 py-2 rounded hover:bg-pink-950 transition-colors duration-200'
+          className={({ isActive }) =>
+            `px-4 py-2 rounded transition-colors duration-200 ${isActive ? 'bg-white text-pink-950' : 'hover:bg-pink-950'}`
+          }
         >
           User Dashboard
-        </Link>
+        </NavLink>
 
-        <Link
+        <NavLink
           to="/admin"
-          className='px-4 py-2 rounded hover:bg-pink-950 transition-colors duration-200'
+          className={({ isActive }) =>
+            `px-4 py-2 rounded transition-colors duration-200 ${isActive ? 'bg-white text-pink-950' : 'hover:bg-pink-950'}`
+          }
         >
           Admin Dashboard
-        </Link>
+        </NavLink>
       </nav>
 
-      <div className=''>
+      <div className='flex-grow'>
         <Outlet />
       </div>
-
     </div>
   );
 }
