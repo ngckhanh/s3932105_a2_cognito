@@ -53,12 +53,12 @@ function User() {
             To access your dashboard, please log in or register.
           </p>
           <div className="flex flex-row items-center justify-center space-x-4 mb-6">
-            <Link to="https://s3932105.auth.us-east-1.amazoncognito.com/login?client_id=7bckgr923mbj59cedeqp0smbug&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Flocalhost%3A8000%2Flogged_in.html">
+            <Link to="https://s3932105.auth.us-east-1.amazoncognito.com/login?client_id=7bckgr923mbj59cedeqp0smbug&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Flogged_in.html">
               <button className="px-6 py-2 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-800 transition-colors">
                 Log In
               </button>
             </Link>
-            <Link to="https://s3932105.auth.us-east-1.amazoncognito.com/signup?client_id=7bckgr923mbj59cedeqp0smbug&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Flocalhost%3A8000%2Flogged_in.html">
+            <Link to="https://s3932105.auth.us-east-1.amazoncognito.com/signup?client_id=7bckgr923mbj59cedeqp0smbug&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Flogged_in.html">
               <button className="px-6 py-2 bg-pink-500 text-white font-semibold rounded-md hover:bg-pink-800 transition-colors">
                 Register
               </button>

@@ -18,9 +18,9 @@
     async function fetchTokens(authCode) {
       const client_id = "7bckgr923mbj59cedeqp0smbug";
       const client_secret = "1njtqg2d4oftua2upj4hn0gvk3ur2d9jg9ie2ro08ee3i701np66";
-      const redirect_uri = "http://localhost:8000/logged_in.html"; // Update with your actual redirect URI
+      const redirect_uri = "http://localhost:8000/logged_in.html";
 
-      const tokenUrl = "https://s3932105.auth.us-east-1.amazoncognito.com/oauth2/token"; // Update with your actual token URL
+      const tokenUrl = "https://s3932105.auth.us-east-1.amazoncognito.com/oauth2/token"; 
 
       const response = await fetch(tokenUrl, {
         method: 'POST',
@@ -47,7 +47,7 @@
         const userRole = decoded['cognito:groups'] ? decoded['cognito:groups'][0] : 'guest';
         console.log("User Role:", userRole);
 
-        // Store user role in localStorage or sessionStorage
+        // Store user role in sessionStorage
         sessionStorage.setItem('userRole', userRole);
 
         // Redirect based on user role
